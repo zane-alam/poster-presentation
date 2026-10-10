@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speak. Confirm. Done. | Low-cost voice AI for Citytouch</title>
+<meta name="description" content="An interactive simulation of a low-cost voice AI agent for City Bank's Citytouch app, with Jev as the decision layer. Student concept by Team Paradox Z.">
+<meta name="theme-color" content="#070816">
+<meta property="og:title" content="Speak. Confirm. Done. | Voice AI for Citytouch">
+<meta property="og:description" content="Watch one voice request travel through a low-cost voice AI agent. Interactive simulation and cost estimate.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Icon sprite (stroke icons, drawn in CSS) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></symbol>
+    <symbol id="i-finger" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M2 12a10 10 0 0 1 18-6"/><path d="M2 16h.01"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 24 24"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-lang" viewBox="0 0 24 24"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-usercheck" viewBox="0 0 24 24"><path d="m16 11 2 2 4-4"/><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></symbol>
+  </defs>
+</svg>
+
+<div class="bg" aria-hidden="true"><div class="bg__scan"></div></div>
+
+<a class="skip" href="#sim">Skip to the simulation</a>
+
+<header class="top">
+  <div class="wrap top__in">
+    <a class="brand" href="#top" aria-label="Citytouch Voice, back to top">
+      <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span>Citytouch&nbsp;Voice</span>
+    </a>
+    <nav class="top__nav" aria-label="Sections">
+      <a href="#sim">Simulation</a>
+      <a href="#cost">Cost</a>
+      <a href="#next">Guardrails</a>
+      <a href="#scan">Scan</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero__copy">
+      <p class="eyebrow">City Bank &times; Jev &nbsp;/&nbsp; Student concept &nbsp;/&nbsp; Team Paradox Z</p>
+      <h1 class="hero__title"><span>Speak.</span><span class="out">Confirm.</span><span class="acc">Done.</span></h1>
+      <p class="hero__lede">A low-cost voice AI agent for the Citytouch app. <b>Jev</b> makes the quick decisions, so the costly AI runs only when it is truly needed.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#sim"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Run the simulation</a>
+        <a class="btn btn--ghost" href="#cost">See how the cost works</a>
+      </div>
+    </div>
+
+    <aside class="decision" aria-label="Example of what Jev returns">
+      <p class="decision__tag"><span class="dot" aria-hidden="true"></span>Example output &middot; illustrative</p>
+      <p class="decision__say" lang="bn">রহিমকে ৫০০ টাকা পাঠাও</p>
+      <p class="decision__en">&ldquo;Send 500 taka to Rahim&rdquo;</p>
+      <ul class="decision__rows">
+        <li><span>intent</span><b>send_money</b><em>0.97</em></li>
+        <li><span>payee</span><b>Rahim (saved)</b><em>0.95</em></li>
+        <li><span>unclear</span><b>no</b><em>0.03</em></li>
+        <li><span>risk</span><b>low</b><em>0.08</em></li>
+      </ul>
+      <p class="decision__route">Route: <b>Lane A, routine</b> &middot; LLM calls: <b>0</b></p>
+    </aside>
+
+    <ul class="facts" aria-label="Key facts">
+      <li><b>900,000+</b><span>regular Citytouch users</span></li>
+      <li><b>100+</b><span>digital services in the app</span></li>
+      <li><b>70&ndash;500 ms</b><span>Jev response time (vendor-reported)</span></li>
+      <li><b>0</b><span>payments approved by voice alone</span></li>
+    </ul>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <ul>
+        <li lang="bn">রহিমকে ৫০০ টাকা পাঠাও</li><li>Send 500 taka to Rahim</li>
+        <li lang="bn">আমার ব্যালেন্স কত?</li><li>What is my balance?</li>
+        <li lang="bn">বিদ্যুৎ বিল দিয়ে দাও</li><li>Pay the electricity bill</li>
+      </ul>
+      <ul>
+        <li lang="bn">রহিমকে ৫০০ টাকা পাঠাও</li><li>Send 500 taka to Rahim</li>
+        <li lang="bn">আমার ব্যালেন্স কত?</li><li>What is my balance?</li>
+        <li lang="bn">বিদ্যুৎ বিল দিয়ে দাও</li><li>Pay the electricity bill</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SIMULATION -->
+  <section class="sec wrap" id="sim">
+    <header class="sec__head">
+      <p class="eyebrow">01 &mdash; How the system works</p>
+      <h2>Watch one voice request travel through the system</h2>
+      <p class="sec__sub">Pick a request and run it. The packet follows the arrows through all five steps. Jev decides the lane, and you approve the payment at the end, just like a real customer would.</p>
+    </header>
+
+    <div class="controls panel" role="group" aria-label="Simulation controls">
+      <p class="controls__label">Choose a voice request</p>
+      <div class="scn" id="scn">
+        <button class="scn__btn" type="button" data-id="routine" aria-pressed="true">
+          <span class="scn__tag lane-a">Routine</span>
+          <span class="scn__bn" lang="bn">রহিমকে ৫০০ টাকা পাঠাও</span>
+          <span class="scn__en">Send 500 taka to Rahim</span>
+        </button>
+        <button class="scn__btn" type="button" data-id="advice" aria-pressed="false">
+          <span class="scn__tag lane-b">Advice</span>
+          <span class="scn__bn" lang="bn">এই মাসের বিল দিতে পারব?</span>
+          <span class="scn__en">Can I afford this month&rsquo;s bills?</span>
+        </button>
+        <button class="scn__btn" type="button" data-id="risky" aria-pressed="false">
+          <span class="scn__tag lane-c">High risk</span>
+          <span class="scn__bn" lang="bn">নতুন একজনকে ৫০,০০০ টাকা পাঠাও</span>
+          <span class="scn__en">Send 50,000 taka to a new person</span>
+        </button>
+        <button class="scn__btn" type="button" data-id="unclear" aria-pressed="false">
+          <span class="scn__tag lane-c">Unclear</span>
+          <span class="scn__bn" lang="bn">ওকে ওটা পাঠিয়ে দাও</span>
+          <span class="scn__en">Send that to him</span>
+        </button>
+      </div>
+      <div class="controls__row">
+        <button class="btn btn--primary" type="button" id="btn-run"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>Run simulation</button>
+        <button class="btn btn--ghost" type="button" id="btn-auto" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-loop"/></svg>Auto-play</button>
+        <button class="btn btn--ghost" type="button" id="btn-reset"><svg class="ico" aria-hidden="true"><use href="#i-reset"/></svg>Reset</button>
+        <p class="controls__hint">Auto-play mixes requests using the setting in the cost section.</p>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <svg class="wires" id="wires" aria-hidden="true" focusable="false">
+        <defs>
+          <marker id="ah" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#7a73c9"/></marker>
+          <marker id="ah-live" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#ffffff"/></marker>
+          <marker id="ah-done" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#3df5c8"/></marker>
+        </defs>
+        <g id="wires-g"></g>
+        <g id="packet" class="packet"><circle class="pk-glow" r="16"/><circle class="pk-core" r="6"/></g>
+      </svg>
+
+      <!-- Step 1 -->
+      <article class="node n-speak" id="n-speak">
+        <header class="node__head">
+          <span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-mic"/></svg></span>
+          <div><p class="step">Step 1</p><h3>Speak</h3></div>
+        </header>
+        <p class="node__desc">The customer taps the mic in Citytouch and talks, in Bangla or English.</p>
+        <div class="live">
+          <div class="wave" id="wave" aria-hidden="true"></div>
+          <p class="say" id="say-bn" lang="bn"></p>
+          <p class="say-en" id="say-en"></p>
+        </div>
+      </article>
+
+      <!-- Step 2 -->
+      <article class="node n-stt" id="n-stt">
+        <header class="node__head">
+          <span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-wave"/></svg></span>
+          <div><p class="step">Step 2</p><h3>Transcribe</h3></div>
+        </header>
+        <p class="node__desc">Speech-to-text turns the voice into text that Jev can read.</p>
+        <div class="live">
+          <p class="mono-line"><span class="k">text</span><span id="stt-bn" lang="bn"></span></p>
+          <p class="mono-line"><span class="k">en</span><span id="stt-en"></span></p>
+        </div>
+      </article>
+
+      <!-- Step 3 -->
+      <article class="node n-jev" id="n-jev">
+        <header class="node__head">
+          <span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg></span>
+          <div><p class="step">Step 3</p><h3>Jev decides</h3></div>
+          <span class="chip chip--lat" id="lat" aria-live="off">latency &mdash;</span>
+        </header>
+        <p class="node__desc">One call, four questions answered in parallel. Jev writes no text. It returns structured answers with confidence scores.</p>
+        <div class="qs" id="qs">
+          <div class="q" data-q="intent"><div class="q__top"><span class="q__k">Intent?</span><span class="q__t">choice</span></div><p class="q__v" id="q-intent-v">&mdash;</p><div class="bar"><i id="q-intent-b"></i></div><p class="q__p" id="q-intent-p">waiting</p></div>
+          <div class="q" data-q="payee"><div class="q__top"><span class="q__k">Payee match?</span><span class="q__t">choice</span></div><p class="q__v" id="q-payee-v">&mdash;</p><div class="bar"><i id="q-payee-b"></i></div><p class="q__p" id="q-payee-p">waiting</p></div>
+          <div class="q" data-q="unclear"><div class="q__top"><span class="q__k">Unclear?</span><span class="q__t">yes / no</span></div><p class="q__v" id="q-unclear-v">&mdash;</p><div class="bar"><i id="q-unclear-b"></i></div><p class="q__p" id="q-unclear-p">waiting</p></div>
+          <div class="q" data-q="risk"><div class="q__top"><span class="q__k">Risk level?</span><span class="q__t">score</span></div><p class="q__v" id="q-risk-v">&mdash;</p><div class="bar"><i id="q-risk-b"></i></div><p class="q__p" id="q-risk-p">waiting</p></div>
+        </div>
+        <div class="jev__foot">
+          <span class="chip chip--route" id="route-chip">route &mdash;</span>
+          <p class="note">Demo routing rule: risk of 0.5 or more, or any confidence under 0.7, goes to the safety lane. Unclear or advice goes to the LLM lane. Everything else is routine.</p>
+        </div>
+      </article>
+
+      <!-- Lanes -->
+      <article class="node lane lane--a" id="l-a">
+        <header class="node__head">
+          <span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg></span>
+          <div><p class="step">Lane A &middot; lowest cost</p><h3>Routine requests</h3></div>
+        </header>
+        <p class="node__desc">Balance, saved payee, saved bill. Citytouch handles it with a template reply, so there is no LLM call.</p>
+        <div class="live"><p class="live__t" id="la-t"></p></div>
+        <p class="cost-line"><span>est. cost</span><b>$13&ndash;25 per 1M requests</b></p>
+      </article>
+
+      <article class="node lane lane--b" id="l-b">
+        <header class="node__head">
+          <span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg></span>
+          <div><p class="step">Lane B &middot; used rarely</p><h3>Unclear or advice</h3></div>
+        </header>
+        <p class="node__desc">An LLM answers, using a short prompt, the customer&rsquo;s own account facts and a daily budget.</p>
+        <div class="live"><p class="live__t" id="lb-t"></p></div>
+        <p class="cost-line"><span>est. cost</span><b>$173&ndash;185 per 1M requests</b></p>
+      </article>
+
+      <article class="node lane lane--c" id="l-c">
+        <header class="node__head">
+          <span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-headset"/></svg></span>
+          <div><p class="step">Lane C &middot; safety first</p><h3>Low confidence or risk</h3></div>
+        </header>
+        <p class="node__desc">Extra confirmation, a clarifying question, or a human agent takes over.</p>
+        <div class="live"><p class="live__t" id="lc-t"></p></div>
+        <p class="cost-line"><span>est. cost</span><b>$13&ndash;25 per 1M + human time</b></p>
+      </article>
+
+      <!-- Stats (no wires) -->
+      <aside class="node n-stats" id="n-stats" aria-label="Session statistics">
+        <header class="node__head">
+          <div><p class="step">This session</p><h3>Run stats</h3></div>
+        </header>
+        <dl class="stats">
+          <div><dt>Requests</dt><dd id="st-n">0</dd></div>
+          <div><dt>Routine (A)</dt><dd id="st-a">0</dd></div>
+          <div><dt>LLM (B)</dt><dd id="st-b">0</dd></div>
+          <div><dt>Safety (C)</dt><dd id="st-c">0</dd></div>
+          <div class="wide"><dt>LLM calls avoided</dt><dd id="st-avoid">&mdash;</dd></div>
+          <div class="wide"><dt>Avg Jev latency (simulated)</dt><dd id="st-lat">&mdash;</dd></div>
+        </dl>
+      </aside>
+
+      <!-- Step 4 -->
+      <article class="node n-confirm" id="n-confirm">
+        <header class="node__head">
+          <span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-finger"/></svg></span>
+          <div><p class="step">Step 4</p><h3>Confirm</h3></div>
+        </header>
+        <p class="node__desc">Fingerprint or PIN approves. Voice never pays alone.</p>
+        <div class="live">
+          <p class="live__t" id="cf-t"></p>
+          <div class="cf-actions">
+            <button class="btn btn--primary btn--sm" type="button" id="btn-approve" disabled><svg class="ico" aria-hidden="true"><use href="#i-finger"/></svg>Approve</button>
+            <button class="btn btn--ghost btn--sm" type="button" id="btn-cancel" disabled>Cancel</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Step 5 -->
+      <article class="node n-exec" id="n-exec">
+        <header class="node__head">
+          <span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-bank"/></svg></span>
+          <div><p class="step">Step 5</p><h3>Execute</h3></div>
+        </header>
+        <p class="node__desc">The Citytouch core makes the payment and sends a receipt.</p>
+        <div class="live">
+          <div class="receipt" id="receipt">
+            <span class="receipt__ok" aria-hidden="true"><svg class="ico"><use href="#i-check"/></svg></span>
+            <div><p class="live__t" id="ex-t"></p><p class="receipt__ref" id="ex-ref"></p></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="logbox panel">
+      <div class="logbox__head"><p class="eyebrow">Event log</p><p class="logbox__note">Simulated. Times and scores are illustrative.</p></div>
+      <div class="log" id="log" role="log" aria-live="polite" aria-label="Simulation event log"><p class="log__empty">Run a simulation to see each step appear here.</p></div>
+    </div>
+  </section>
+
+  <!-- COST -->
+  <section class="sec wrap" id="cost">
+    <header class="sec__head">
+      <p class="eyebrow">02 &mdash; Why it is cheap</p>
+      <h2>The LLM only runs when Jev asks for it</h2>
+      <p class="sec__sub">Move the slider to change how many voice requests need the LLM. Compare that with a design where an LLM handles every request.</p>
+    </header>
+
+    <div class="cost panel">
+      <div class="cost__ctl">
+        <label for="share" class="cost__label">Share of requests that need the LLM</label>
+        <div class="cost__val"><output id="share-out" for="share">20%</output></div>
+        <input id="share" type="range" min="0" max="100" step="1" value="20" aria-describedby="share-help">
+        <div class="cost__scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div>
+        <p class="cost__help" id="share-help">Advice and unclear requests are the ones that escalate to the LLM. At 0% every request is routine.</p>
+      </div>
+
+      <div class="cost__viz" aria-live="polite">
+        <p class="cost__title">Estimated cost of the decision step, per 1 million voice requests</p>
+        <div class="row">
+          <div class="row__k"><b>LLM-only baseline</b><span>a low-priced LLM on every request</span></div>
+          <div class="track"><i class="base" id="bar-base"></i></div>
+          <div class="row__v" id="val-base">$160</div>
+        </div>
+        <div class="row">
+          <div class="row__k"><b>With Jev</b><span>Jev on every request, LLM only on escalations</span></div>
+          <div class="track"><i class="jev" id="bar-jev"></i><i class="jev jev--range" id="bar-jev-r"></i></div>
+          <div class="row__v acc" id="val-jev">$45&ndash;57</div>
+        </div>
+        <div class="verdict">
+          <p class="verdict__n" id="ratio">2.8&ndash;3.6&times;</p>
+          <p class="verdict__t" id="verdict">lower than the LLM-only baseline.</p>
+        </div>
+        <p class="cost__note" id="breakeven"></p>
+      </div>
+    </div>
+
+    <details class="assume panel">
+      <summary>How these numbers are estimated</summary>
+      <ul>
+        <li>Assumes 300 input and 100 output tokens per request.</li>
+        <li>Jev: $0.042 to $0.084 per million input tokens (sources differ), output free. That gives about $13 to $25 per million requests.</li>
+        <li>LLM-only baseline: $0.20 per million input tokens (a low-priced LLM) and output at about 5 times the input price. That gives about $160 per million requests. Pricier LLMs cost more.</li>
+        <li>These prices come from unofficial sources and Jev&rsquo;s speed and price claims are vendor-reported. Check official price pages before using them.</li>
+        <li>Excludes speech-to-text, hosting, banking-system costs and human agent time.</li>
+        <li>At 0% escalation, the saving matches the poster&rsquo;s decision-step estimate of about 6 to 13 times.</li>
+        <li>A pilot would replace all of this with measured numbers.</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- GUARDRAILS + NEXT STEP -->
+  <section class="sec wrap" id="next">
+    <header class="sec__head">
+      <p class="eyebrow">03 &mdash; Risks and what we recommend</p>
+      <h2>Pilot first, scale on evidence</h2>
+    </header>
+
+    <div class="guard">
+      <ul class="guard__list">
+        <li><span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span><div><h3>Voice never pays alone</h3><p>Fingerprint or PIN approves every payment, with limits, so a fake voice cannot move money.</p></div></li>
+        <li><span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-lang"/></svg></span><div><h3>Test Bangla first</h3><p>Jev&rsquo;s accuracy in languages other than English is not published. Test Bangla and mixed speech before launch.</p></div></li>
+        <li><span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg></span><div><h3>Share minimal data</h3><p>Jev is a third-party service from a young company. Send only what it needs, masked, and keep a fallback.</p></div></li>
+        <li><span class="ico-wrap"><svg class="ico" aria-hidden="true"><use href="#i-usercheck"/></svg></span><div><h3>Low scores go to a human</h3><p>A confidence score is not a guarantee. Tune the limits in the pilot and route doubtful requests to an agent.</p></div></li>
+      </ul>
+
+      <ol class="steps" aria-label="Recommended rollout">
+        <li><span class="steps__n">1</span><div><h3>Pilot</h3><p>Three safe actions with a small group: check balance, pay a saved payee, pay a saved bill.</p></div></li>
+        <li><span class="steps__n">2</span><div><h3>Measure</h3><p>Cost per request, completion time, error rate and customer satisfaction, against today&rsquo;s app.</p></div></li>
+        <li><span class="steps__n">3</span><div><h3>Scale</h3><p>Add advice and more services only if the results and the safety checks hold.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- QR -->
+  <section class="sec wrap scan" id="scan">
+   <div class="scan__panel">
+    <div class="scan__txt">
+      <p class="eyebrow">04 &mdash; Take it with you</p>
+      <h2>Scan to open this page</h2>
+      <p class="sec__sub">Point your phone camera at the code, or click it, to open the live simulation.</p>
+      <p class="scan__url" id="qr-url"></p>
+    </div>
+    <a class="qr" id="qr-link" href="#scan" aria-label="Open the website">
+      <span class="qr__tile" id="qr"></span>
+      <span class="qr__cap"><svg class="ico" aria-hidden="true"><use href="#i-qr"/></svg>Scan or click</span>
+    </a>
+   </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__who">
+      <p class="foot__team">Team Paradox Z</p>
+      <p>Zane Alam Zebin &middot; MIS-16th [MBA], Section A</p>
+      <p>University of Dhaka</p>
+    </div>
+    <div class="foot__legal">
+      <p>Student concept made for a university poster presentation. It is not affiliated with or endorsed by City Bank PLC or TypeSafe AI. City Bank, Citytouch and Jev belong to their owners. The simulation is illustrative, not City Bank&rsquo;s real system.</p>
+      <p class="foot__src">Sources:
+        <a href="https://www.tbsnews.net/node/1298126" target="_blank" rel="noopener">TBS News</a>,
+        <a href="https://qorusglobal.com/innovations/28708-citytouch-new-age-digital-banking-app-of-city-bank-plc" target="_blank" rel="noopener">Qorus-Infosys Finacle Awards 2024</a>,
+        <a href="https://www.firecrawl.dev/blog/what-is-jev" target="_blank" rel="noopener">Firecrawl</a>,
+        <a href="https://www.langchain.com/blog/building-a-harness-with-jev" target="_blank" rel="noopener">LangChain</a>,
+        <a href="https://pub.towardsai.net/what-is-jev-ai-a-practical-guide-to-system-one-and-executable-decisions-c289a750a3ae" target="_blank" rel="noopener">Towards AI</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/qrcode.js"></script>
+<script src="js/qr.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
